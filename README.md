@@ -1,1 +1,1 @@
-# alkfejl_mini-neptun
+# mini-neptun
