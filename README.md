@@ -60,6 +60,16 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
   - ### DELETE
     - /subject/delete/id - tárgy törlése
     - /student/removesubject/id - tárgy leadása
+	
+## Egy végpont működése 
+
+A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja be. Tárgyfelvétel után az adott hallgató felvett tárgyainak listázása következik.
+
+![Tárgy felvétele majd egy hallgató tárgyainak listázása](/img/targyfelvetel_vegpont_diagram.png)
+
+## Adatbázisterv
+
+![Adatbázisterv UML diagramja](/img/adatbazis_uml.png)
 
 ## Fejlesztői környezet
 
@@ -85,4 +95,29 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
 ### Git
 
 A fő branch a `master`, melyre közvetlen `merge` nem lehetséges, csak külön branchből létrehozott pull request jóváhagyása után.
+
+## Alkalmazott könyvtárstruktúra 
+
+  - entities
+    - UserEntity.java
+	- TeacherEntity.java
+	- StudentEntity.java
+	- TimetableEntity.java
+	- SubjectEntity.java
+  - repositoris
+    - UserRepository.java
+	- TeacherRepository.java
+	- StudentRepository.java
+	- TimetableRepository.java
+	- SubjectRepository.java
+  - controllers
+    - TeacherController.java
+	- StudentController.java
+	- UserController.java
+	- TimetableController.java
+	- SubjectController.java
+  - services
+    - MyUserDetailsService.java
+  - MiniNeptunApplication.java
+  - WebSecurityCongif.java
 
