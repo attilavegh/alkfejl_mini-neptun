@@ -1,5 +1,7 @@
 # Tárgyak felvétele - mini Neptun
 
+## Tudnivalók
+
 ### 1.0 Célkitűzés
 
 Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek között. Az alkalmazással lehetősége lesz egy hallgatónak tárgyai felvételére, leadására, illetve egy tanárnak tárgyak hirdetésére és megszüntetésére.
@@ -35,3 +37,27 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
 - Vendég: Nem regisztrált látogató.
 - Tanár: Regisztrált, belépés után tárgyakat tud hirdetni és törölni
 - Hallgató: Regisztrált, belépés után tárgyakat vehet fel, adhat le, listázhatja a tárgyait
+
+## Végpontok
+
+  - ### GET
+    - /subject/all - tárgyak listázás
+    - /subject/studentid - tanuló felvett tárgyainak listázása
+    - /student/all - tanulók listázása
+    - /student/subjectid - tanulók listázás tárgyak szerint
+    - /teacher/all - tanárok listázása
+    - /teacher/subjectid - tanárok listázás tárgy szerint (≧ 1)
+
+  - ### POST
+    - /login
+    - /register
+    - /student/addsubject/id - tárgy felvétele
+    - /subject/new - új tárgy meghírdetése
+
+  - ### PUT
+    - /subject/modify/id - tárgy szerkesztés
+
+  - ### DELETE
+    - /subject/delete/id - tárgy törlése
+    - /student/removesubject/id - tárgy leadása
+
