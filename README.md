@@ -61,3 +61,28 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
     - /subject/delete/id - tárgy törlése
     - /student/removesubject/id - tárgy leadása
 
+## Fejlesztői környezet
+
+### Felhasznált eszközök
+
+- Git verziókezelő
+- SpringBoot Java keretrendszer
+- H2 adatbázis kezelő
+- NetBeans és IntelliJ IDE
+- Github a projekt egyszerű megosztásához
+- Maven a dependenciák kezelésére
+
+### Projekt indítása
+
+#### Backend
+
+- Git verziókezelő telepítése
+- Projekt klónozása: `https://github.com/attilavegh/mini-neptun.git`
+- A használt fejlesztői környezetbe való importálás után a Spring alkalmazás indítása lehetséges:
+  - parancssorból: `mvn spring-boot:run`
+  - ha elérhető Maven plug-in, akkor a `run` goal futtatásával
+
+### Git
+
+A fő branch a `master`, melyre közvetlen `merge` nem lehetséges, csak külön branchből létrehozott pull request jóváhagyása után.
+
