@@ -65,11 +65,11 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
 
 A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja be. Tárgyfelvétel után az adott hallgató felvett tárgyainak listázása következik.
 
-![Tárgy felvétele majd egy hallgató tárgyainak listázása](/img/targyfelvetel_vegpont_diagram.png)
+![Tárgy felvétele majd egy hallgató tárgyainak listázása](/img/targyfelvetel_vegpont_diagram.PNG)
 
 ## Adatbázisterv
 
-![Adatbázisterv UML diagramja](/img/adatbazis_uml.png)
+![Adatbázisterv UML diagramja](/img/adatbazis_uml.PNG)
 
 ## Fejlesztői környezet
 
