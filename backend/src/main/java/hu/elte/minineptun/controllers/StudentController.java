@@ -3,6 +3,8 @@ package hu.elte.minineptun.controllers;
 import hu.elte.minineptun.entities.Student;
 import hu.elte.minineptun.entities.Timetable;
 import hu.elte.minineptun.repositories.StudentRepository;
+import hu.elte.minineptun.repositories.TimetableRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
+    
+    @Autowired
+    private TimetableRepository timetableRepository;
     
     @GetMapping("")
     public ResponseEntity<Iterable<Student>> getAll() {
@@ -66,13 +71,44 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
     
-    @GetMapping("/{id}/timetable")
-    public ResponseEntity<Timetable> getTimetable(@PathVariable Integer id) {
+    @GetMapping("/{id}/timetables")
+    public ResponseEntity<Iterable<Timetable>> getTimetables(@PathVariable Integer id) {
         Optional<Student> oStudent = studentRepository.findById(id);
         if (!oStudent.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(oStudent.get().getTimetable());
+        return ResponseEntity.ok(oStudent.get().getTimetables());
+    }
+    
+    @PostMapping("/{id}/timetables")
+    public ResponseEntity<Timetable> postTimetables (@PathVariable Integer id, @RequestBody Timetable timetable) {
+        Optional<Student> oStudent = studentRepository.findById(id);
+        if (!oStudent.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        timetable.setId(null);
+        timetable.setStudent(oStudent.get());
+        return ResponseEntity.ok(timetableRepository.save(timetable));
+    }
+    
+    @PutMapping("/{id}/timetables")
+    public ResponseEntity<Iterable<Timetable>> putTimetables (@PathVariable Integer id, @RequestBody List<Timetable> timetables) {
+        Optional<Student> oStudent = studentRepository.findById(id);
+        if (!oStudent.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        for (Timetable timetable: timetables) {
+            Optional<Timetable> oTimetable = timetableRepository.findById(timetable.getId());
+            if (!oTimetable.isPresent()) {
+                continue;
+            }
+            oTimetable.get().setStudent(oStudent.get());
+            timetableRepository.save(oTimetable.get());
+        }
+        
+        return ResponseEntity.ok(oStudent.get().getTimetables());
     }
 }
 
