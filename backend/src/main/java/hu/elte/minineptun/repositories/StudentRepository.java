@@ -1,15 +1,10 @@
 package hu.elte.minineptun.repositories;
 
 import hu.elte.minineptun.entities.Student;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author Lehel T420
- */
+import java.util.Optional;
 
-@Repository
-public interface StudentRepository extends CrudRepository<Student, Integer>{
- 
+public interface StudentRepository extends org.springframework.data.repository.CrudRepository<Student, Integer> {
+    Optional<Student> getStudentByEmail(String email);
+    Optional<Student> getStudentByName(String email);
 }
