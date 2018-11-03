@@ -41,26 +41,43 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
 ## Végpontok
 
   - ### GET
-    - /subject/all - tárgyak listázás
-    - /subject/studentid - tanuló felvett tárgyainak listázása
-    - /student/all - tanulók listázása
-    - /student/subjectid - tanulók listázás tárgyak szerint
-    - /teacher/all - tanárok listázása
-    - /teacher/subjectid - tanárok listázás tárgy szerint (≧ 1)
+    - /students - tanulók listázása
+    - /students/{email} - tanuló keresése email szerint
+    - /students/name/{name} - tanuló keresése név szerint
+    - /students/{id}/subjects} - tanuló tárgyainak listázása
+    
+    - /subjects - tárgyak listázása
+    - /subjects/{id} - tárgy keresése ID szerint
+    - /subjects/name/{name} - tárgy keresése név szerint
+    - /subjects/{id}/teacher - tárgy tanárának keresése
+    - /subjects/{id}/students - tárgyat felvett tanulók listázása
+    
+    - /teacher - tanárok listázása
+    - /teacher/{email} - tanár keresése email szerint
+    - /teacher/name/{name} - tanár keresése név szerint
+    - /teacher/{id}/subjects - tanár tárgyainak listázása
+   
+    - /users - felhasználók listázása
+    - /users/{email} - felhasználó keresése email szerint
 
   - ### POST
     - /login
     - /register
-    - /student/addsubject/id - tárgy felvétele
-    - /subject/new - új tárgy meghírdetése
+    
+    - /students/add - új tanuló hozzáadása
+    - /teachers/add - új tanár hozzáadása
+    - /teachers/{id}/subject/add - új tárgy hozzáadása
 
   - ### PUT
-    - /subject/modify/id - tárgy szerkesztés
-
+    - /students/{id} - tanuló szerkesztése
+    - /subjects/{id} - tárgy szerkesztése
+    - /teachers/{id} - tanár szerkesztése
+    
   - ### DELETE
-    - /subject/delete/id - tárgy törlése
-    - /student/removesubject/id - tárgy leadása
-	
+    - /students/{id} - tanuló törlése
+    - /subjects/{id} - tárgy törlése
+    - /teachers/{id} - tanár törlése
+    	
 ## Egy végpont működése 
 
 A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja be. Tárgyfelvétel után az adott hallgató felvett tárgyainak listázása következik.
@@ -94,30 +111,34 @@ A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja 
 
 ### Git
 
-A fő branch a `master`, melyre közvetlen `merge` nem lehetséges, csak külön branchből létrehozott pull request jóváhagyása után.
+A fő branch a `master`, melyre közvetlen `push` nem lehetséges, csak külön branchből létrehozott pull request jóváhagyása után lehetséges a `merge`.
 
 ## Alkalmazott könyvtárstruktúra 
 
   - entities
-    - UserEntity.java
-	- TeacherEntity.java
-	- StudentEntity.java
-	- TimetableEntity.java
-	- SubjectEntity.java
-  - repositoris
+    - User.java
+	- Teacher.java
+	- Student.java
+	- Subject.java
+	- Role.java
+	
+  - repositories
+    - UserBaseRepository.java
     - UserRepository.java
 	- TeacherRepository.java
 	- StudentRepository.java
-	- TimetableRepository.java
 	- SubjectRepository.java
+	
   - controllers
     - TeacherController.java
 	- StudentController.java
 	- UserController.java
-	- TimetableController.java
 	- SubjectController.java
+	
   - services
-    - MyUserDetailsService.java
+    - UserDetailsService.java
+    
   - MiniNeptunApplication.java
-  - WebSecurityCongif.java
+  - JpaConfig.java
+  - WebSecurityConfig.java
 
