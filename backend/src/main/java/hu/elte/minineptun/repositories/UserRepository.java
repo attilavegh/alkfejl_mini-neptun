@@ -10,4 +10,5 @@ import java.util.Optional;
 @Transactional
 public interface UserRepository extends UserBaseRepository<User> {
     Optional<User> getUserByEmail(String email);
+    Optional<User> findByUsername(String username);
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.access.annotation.Secured;
 
 @RestController
 @RequestMapping("/api/subjects")
@@ -64,6 +65,7 @@ public class SubjectController {
     }
 
     @PutMapping("/{id}")
+    @Secured({ "TEACHER" })
     public ResponseEntity<Subject> modifySubjectById(@PathVariable Integer id,
                                                      @RequestBody Subject subject) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
@@ -77,6 +79,7 @@ public class SubjectController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured({ "TEACHER" })
     public ResponseEntity deleteSubjectById(@PathVariable Integer id) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
         if (!oSubject.isPresent()) {

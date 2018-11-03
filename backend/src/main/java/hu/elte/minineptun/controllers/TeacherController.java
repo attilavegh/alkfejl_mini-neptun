@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.access.annotation.Secured;
 
 @RestController
 @RequestMapping("/api/teachers")
@@ -58,6 +59,7 @@ public class TeacherController {
     }
 
     @PostMapping("/add")
+    @Secured({ "TEACHER" })
     public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher) {
         teacher.setId(null);
         teacher.setRole(Role.TEACHER);
@@ -65,6 +67,7 @@ public class TeacherController {
     }
 
     @PostMapping("/{id}/subject/add")
+    @Secured({ "TEACHER" })
     public ResponseEntity<Subject> addSubjectByTeacherId(@PathVariable Integer id,
                                                          @RequestBody Subject subject) {
         Optional<Teacher> oTeacher = teacherRepository.findById(id);
@@ -78,6 +81,7 @@ public class TeacherController {
     }
 
     @PutMapping("/{id}")
+    @Secured({ "TEACHER" })
     public ResponseEntity<Teacher> modifyTeacherById(@PathVariable Integer id,
                                                      @RequestBody Teacher teacher) {
         Optional<Teacher> oTeacher = teacherRepository.findById(id);
@@ -90,6 +94,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured({ "TEACHER" })
     public ResponseEntity deleteTeacherByEmail(@PathVariable Integer id) {
         Optional<Teacher> oTeacher = teacherRepository.findById(id);
         if (!oTeacher.isPresent()) {

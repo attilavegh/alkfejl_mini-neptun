@@ -10,6 +10,7 @@ import hu.elte.minineptun.entities.Subject;
 import hu.elte.minineptun.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author Lehel T420
- */
-
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
@@ -30,6 +27,7 @@ public class StudentController {
     private StudentRepository studentRepository;
 
     @GetMapping()
+    @Secured({ "TEACHER" })
     public ResponseEntity<Iterable<Student>> getAllStudents() {
         return ResponseEntity.ok(studentRepository.findAll());
     }
@@ -72,6 +70,7 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
+    @Secured({ "TEACHER" })
     public ResponseEntity<Student> modifyStudentById(@PathVariable Integer id,
                                                      @RequestBody Student student) {
         Optional<Student> oStudent = studentRepository.findById(id);
@@ -84,6 +83,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured({ "TEACHER" })
     public ResponseEntity deleteStudentById(@PathVariable Integer id) {
         Optional<Student> oStudent = studentRepository.findById(id);
         if (!oStudent.isPresent()) {
