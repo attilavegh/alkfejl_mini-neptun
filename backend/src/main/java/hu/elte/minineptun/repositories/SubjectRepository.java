@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface SubjectRepository extends CrudRepository<Subject, Integer> {
-    Optional<Subject> getSubjectByName(String name);
+    Optional<Subject> findByName(String name);
 }

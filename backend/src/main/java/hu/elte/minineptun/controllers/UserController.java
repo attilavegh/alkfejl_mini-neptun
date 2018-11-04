@@ -20,14 +20,15 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-        Optional<User> oUser = userRepository.getUserByEmail(email);
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String username) {
+        Optional<User> oUser = userRepository.findByUsername(username);
         if (!oUser.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(oUser.get());
     }
+    
 }
 
