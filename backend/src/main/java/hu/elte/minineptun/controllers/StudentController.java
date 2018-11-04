@@ -11,6 +11,7 @@ import hu.elte.minineptun.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,15 +27,19 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+
     @GetMapping()
-    @Secured({ "TEACHER" })
+    @Secured("ROLE_TEACHER")
     public ResponseEntity<Iterable<Student>> getAllStudents() {
         return ResponseEntity.ok(studentRepository.findAll());
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<Student> getStudentByEmail(@PathVariable String email) {
-        Optional<Student> oStudent = studentRepository.getStudentByEmail(email);
+    @GetMapping("/{username}")
+    public ResponseEntity<Student> getStudentByUsername(@PathVariable String username) {
+        Optional<Student> oStudent = studentRepository.findByUsername(username);
         if (!oStudent.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -44,7 +49,7 @@ public class StudentController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<Student> getStudentByName(@PathVariable String name) {
-        Optional<Student> oStudent = studentRepository.getStudentByName(name);
+        Optional<Student> oStudent = studentRepository.findByName(name);
         if (!oStudent.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -62,15 +67,21 @@ public class StudentController {
         return ResponseEntity.ok(oStudent.get().getSubjects());
     }
 
-    @PostMapping("/add")
+    @PostMapping("/register")
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
+        Optional<Student> oStudent = studentRepository.findByUsername(student.getUsername());
+        if (oStudent.isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         student.setId(null);
-        student.setRole(Role.STUDENT);
+        student.setPassword(passwordEncoder.encode(student.getPassword()));
+        student.setRole(Role.ROLE_STUDENT);
         return ResponseEntity.ok(studentRepository.save(student));
     }
 
     @PutMapping("/{id}")
-    @Secured({ "TEACHER" })
+    @Secured("ROLE_TEACHER")
     public ResponseEntity<Student> modifyStudentById(@PathVariable Integer id,
                                                      @RequestBody Student student) {
         Optional<Student> oStudent = studentRepository.findById(id);
@@ -78,12 +89,19 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
 
+        if (student.getPassword() == null) {
+            student.setPassword(oStudent.get().getPassword());
+        } else {
+            student.setPassword(passwordEncoder.encode(student.getPassword()));
+        }
+
         student.setId(id);
+        student.setRole(Role.ROLE_STUDENT);
         return ResponseEntity.ok(studentRepository.save(student));
     }
 
     @DeleteMapping("/{id}")
-    @Secured({ "TEACHER" })
+    @Secured("ROLE_TEACHER")
     public ResponseEntity deleteStudentById(@PathVariable Integer id) {
         Optional<Student> oStudent = studentRepository.findById(id);
         if (!oStudent.isPresent()) {

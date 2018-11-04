@@ -1,5 +1,6 @@
 package hu.elte.minineptun;
 
+import hu.elte.minineptun.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     
     @Autowired
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
     
     @Autowired
     protected void configureAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -34,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/h2/**", "/api/users/register").permitAll()
+                .antMatchers("/h2/**", "/api/teachers/register", "/api/students/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .httpBasic()

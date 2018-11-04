@@ -42,7 +42,7 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
 
   - ### GET
     - /students - tanulók listázása
-    - /students/{email} - tanuló keresése email szerint
+    - /students/{username} - tanuló keresése felhasználónév szerint
     - /students/name/{name} - tanuló keresése név szerint
     - /students/{id}/subjects} - tanuló tárgyainak listázása
     
@@ -53,19 +53,16 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
     - /subjects/{id}/students - tárgyat felvett tanulók listázása
     
     - /teacher - tanárok listázása
-    - /teacher/{email} - tanár keresése email szerint
+    - /teacher/{username} - tanár keresése felhasználónév szerint
     - /teacher/name/{name} - tanár keresése név szerint
     - /teacher/{id}/subjects - tanár tárgyainak listázása
    
     - /users - felhasználók listázása
-    - /users/{email} - felhasználó keresése email szerint
+    - /users/{username} - felhasználó keresése felhasználónév szerint
 
   - ### POST
-    - /login
-    - /register
-    
-    - /students/add - új tanuló hozzáadása
-    - /teachers/add - új tanár hozzáadása
+    - /students/register - új tanuló hozzáadása
+    - /teachers/register - új tanár hozzáadása
     - /teachers/{id}/subject/add - új tárgy hozzáadása
 
   - ### PUT
@@ -86,7 +83,7 @@ A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja 
 
 ## Adatbázisterv
 
-![Adatbázisterv UML diagramja](/img/adatbazis_uml.PNG)
+![Adatbázisterv UML diagramja](/img/erd.png)
 
 ## Fejlesztői környezet
 
@@ -135,7 +132,7 @@ A fő branch a `master`, melyre közvetlen `push` nem lehetséges, csak külön 
 	- UserController.java
 	- SubjectController.java
 	
-  - services
+  - security
     - UserDetailsService.java
     
   - MiniNeptunApplication.java

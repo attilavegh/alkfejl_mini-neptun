@@ -31,10 +31,6 @@ public class User implements Serializable {
     @NotNull
     protected String password;
 
-    @Column(unique = true)
-    @NotNull
-    protected String email;
-
     @Column(updatable = false)
     @CreatedDate
     protected Date createdOn;

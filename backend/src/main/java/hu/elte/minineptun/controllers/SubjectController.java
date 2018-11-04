@@ -36,7 +36,7 @@ public class SubjectController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<Subject> getSubjectByName(@PathVariable String name) {
-        Optional<Subject> oSubject = subjectRepository.getSubjectByName(name);
+        Optional<Subject> oSubject = subjectRepository.findByName(name);
         if (!oSubject.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -65,7 +65,7 @@ public class SubjectController {
     }
 
     @PutMapping("/{id}")
-    @Secured({ "TEACHER" })
+    @Secured("ROLE_TEACHER")
     public ResponseEntity<Subject> modifySubjectById(@PathVariable Integer id,
                                                      @RequestBody Subject subject) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
@@ -79,7 +79,7 @@ public class SubjectController {
     }
 
     @DeleteMapping("/{id}")
-    @Secured({ "TEACHER" })
+    @Secured("ROLE_TEACHER")
     public ResponseEntity deleteSubjectById(@PathVariable Integer id) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
         if (!oSubject.isPresent()) {
