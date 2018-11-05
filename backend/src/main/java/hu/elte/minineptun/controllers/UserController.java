@@ -15,11 +15,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping()
-    public ResponseEntity<Iterable<User>> getAllUsers() {
-        return ResponseEntity.ok(userRepository.findAll());
-    }
-
     @GetMapping("/{username}")
     public ResponseEntity<User> getUserByEmail(@PathVariable String username) {
         Optional<User> oUser = userRepository.findByUsername(username);

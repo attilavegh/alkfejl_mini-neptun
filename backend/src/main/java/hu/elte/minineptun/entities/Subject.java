@@ -42,7 +42,7 @@ public class Subject implements Serializable {
     @ManyToOne
     private Teacher teacher;
 
-    @ManyToMany
-    @JoinTable
+    @ManyToMany(mappedBy = "subjects")
+    @JsonIgnore
     private List<Student> students;
 }

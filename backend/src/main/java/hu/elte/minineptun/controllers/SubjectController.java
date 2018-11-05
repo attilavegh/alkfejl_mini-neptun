@@ -4,6 +4,7 @@ import hu.elte.minineptun.entities.Student;
 import hu.elte.minineptun.entities.Subject;
 import hu.elte.minineptun.entities.Teacher;
 import hu.elte.minineptun.repositories.SubjectRepository;
+import hu.elte.minineptun.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ public class SubjectController {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @GetMapping()
     public ResponseEntity<Iterable<Subject>> getAllSubjects() {
@@ -62,6 +66,20 @@ public class SubjectController {
         }
 
         return ResponseEntity.ok(oSubject.get().getStudents());
+    }
+
+    @PostMapping("/{teacherId}")
+    @Secured("ROLE_TEACHER")
+    public ResponseEntity<Subject> addSubjectByTeacherId(@PathVariable Integer teacherId,
+                                                         @RequestBody Subject subject) {
+        Optional<Teacher> oTeacher = teacherRepository.findById(teacherId);
+        if (!oTeacher.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        subject.setId(null);
+        subject.setTeacher(oTeacher.get());
+        return ResponseEntity.ok(subjectRepository.save(subject));
     }
 
     @PutMapping("/{id}")

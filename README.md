@@ -44,7 +44,6 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
     - /students - tanulók listázása
     - /students/{username} - tanuló keresése felhasználónév szerint
     - /students/name/{name} - tanuló keresése név szerint
-    - /students/{id}/subjects} - tanuló tárgyainak listázása
     
     - /subjects - tárgyak listázása
     - /subjects/{id} - tárgy keresése ID szerint
@@ -55,7 +54,6 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
     - /teacher - tanárok listázása
     - /teacher/{username} - tanár keresése felhasználónév szerint
     - /teacher/name/{name} - tanár keresése név szerint
-    - /teacher/{id}/subjects - tanár tárgyainak listázása
    
     - /users - felhasználók listázása
     - /users/{username} - felhasználó keresése felhasználónév szerint
@@ -63,7 +61,10 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
   - ### POST
     - /students/register - új tanuló hozzáadása
     - /teachers/register - új tanár hozzáadása
-    - /teachers/{id}/subject/add - új tárgy hozzáadása
+    - /subjects/{teacherId} - új tárgy hozzáadása
+
+  - ### PATCH
+    - /students/subjects - tárgyak módosítása
 
   - ### PUT
     - /students/{id} - tanuló szerkesztése

@@ -27,8 +27,8 @@ public class Student extends User implements Serializable {
     @NotNull
     private Integer semester;
 
-    @ManyToMany(mappedBy = "students")
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable
     private List<Subject> subjects;
 }
 

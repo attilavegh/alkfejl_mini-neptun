@@ -24,9 +24,6 @@ public class TeacherController {
     private TeacherRepository teacherRepository;
 
     @Autowired
-    private SubjectRepository subjectRepository;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
 
@@ -56,16 +53,6 @@ public class TeacherController {
         return ResponseEntity.ok(oTeacher.get());
     }
 
-    @GetMapping("/{id}/subjects")
-    public ResponseEntity<List<Subject>> getSubjectsByTeacherId(@PathVariable Integer id) {
-        Optional<Teacher> oTeacher = teacherRepository.findById(id);
-        if (!oTeacher.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(oTeacher.get().getSubjectList());
-    }
-
     @PostMapping("/register")
     public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher) {
         Optional<Teacher> oTeacher = teacherRepository.findByUsername(teacher.getUsername());
@@ -77,20 +64,6 @@ public class TeacherController {
         teacher.setRole(Role.ROLE_TEACHER);
         teacher.setPassword(passwordEncoder.encode(teacher.getPassword()));
         return ResponseEntity.ok(teacherRepository.save(teacher));
-    }
-
-    @PostMapping("/{id}/subject/add")
-    @Secured("ROLE_TEACHER")
-    public ResponseEntity<Subject> addSubjectByTeacherId(@PathVariable Integer id,
-                                                         @RequestBody Subject subject) {
-        Optional<Teacher> oTeacher = teacherRepository.findById(id);
-        if (!oTeacher.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        subject.setId(null);
-        subject.setTeacher(oTeacher.get());
-        return ResponseEntity.ok(subjectRepository.save(subject));
     }
 
     @PutMapping("/{id}")
