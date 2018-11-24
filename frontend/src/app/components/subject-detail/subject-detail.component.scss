@@ -1,0 +1,17 @@
+.subject-detail {
+  display: flex;
+  justify-content: center;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 30px;
+    width: 50%;
+  }
+
+  &__field {
+    width: 100%;
+  }
+}

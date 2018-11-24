@@ -123,5 +123,10 @@
       }
     }
   },
-  "defaultProject": "mini-neptun"
+  "defaultProject": "mini-neptun",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

@@ -45,14 +45,14 @@ public class StudentController {
         return ResponseEntity.ok(oStudent.get());
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<Student> getStudentByName(@PathVariable String name) {
-        Optional<Student> oStudent = studentRepository.findByName(name);
+    @GetMapping("/{username}/subjects")
+    public ResponseEntity<List<Subject>> getSubjectsByUsername(@PathVariable String username) {
+        Optional<Student> oStudent = studentRepository.findByUsername(username);
         if (!oStudent.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(oStudent.get());
+        return ResponseEntity.ok(oStudent.get().getSubjects());
     }
 
     @PostMapping("/register")

@@ -79,6 +79,7 @@ public class SubjectController {
 
         subject.setId(null);
         subject.setTeacher(oTeacher.get());
+        subject.setStudents(null);
         return ResponseEntity.ok(subjectRepository.save(subject));
     }
 
@@ -93,18 +94,19 @@ public class SubjectController {
 
         subject.setId(id);
         subject.setTeacher(oSubject.get().getTeacher());
+        subject.setStudents(oSubject.get().getStudents());
         return ResponseEntity.ok(subjectRepository.save(subject));
     }
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_TEACHER")
-    public ResponseEntity deleteSubjectById(@PathVariable Integer id) {
+    public ResponseEntity<Subject> deleteSubjectById(@PathVariable Integer id) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
         if (!oSubject.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
         subjectRepository.delete(oSubject.get());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(oSubject.get());
     }
 }

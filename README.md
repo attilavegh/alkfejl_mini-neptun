@@ -43,7 +43,6 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
   - ### GET
     - /students - tanulók listázása
     - /students/{username} - tanuló keresése felhasználónév szerint
-    - /students/name/{name} - tanuló keresése név szerint
     
     - /subjects - tárgyak listázása
     - /subjects/{id} - tárgy keresése ID szerint

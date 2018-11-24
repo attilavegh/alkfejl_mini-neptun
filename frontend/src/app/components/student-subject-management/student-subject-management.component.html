@@ -1,0 +1,52 @@
+<app-page-title title="Tárgyak"></app-page-title>
+<div class="student-subject-management" *ngIf="subjects$ | async as subjects">
+  <table mat-table class="student-subject-management__table mat-elevation-z8" [dataSource]="subjects">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Azonosító</th>
+      <td mat-cell *matCellDef="let subject">{{subject.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Név</th>
+      <td mat-cell *matCellDef="let subject">{{subject.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="day">
+      <th mat-header-cell *matHeaderCellDef>Nap</th>
+      <td mat-cell *matCellDef="let subject">{{subject.day}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Időpont</th>
+      <td mat-cell *matCellDef="let subject">{{subject.time}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef>Terem</th>
+      <td mat-cell *matCellDef="let subject">{{subject.location}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isTaken">
+      <th mat-header-cell *matHeaderCellDef>Felvett</th>
+      <td mat-cell *matCellDef="let subject">
+        <mat-icon *ngIf="subject.isTaken">done</mat-icon>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let subject" class="student-subject-management__options">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="onAdd(subject.id)" mat-menu-item [disabled]="subject.isTaken">Felvétel</button>
+          <button (click)="onRemove(subject.id)" mat-menu-item [disabled]="!subject.isTaken">Leadás</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

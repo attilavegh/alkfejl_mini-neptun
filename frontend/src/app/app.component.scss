@@ -1,0 +1,12 @@
+.app {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    margin-bottom: 15px;
+  }
+
+  &__body {
+    margin: 0 15px 15px;
+  }
+}

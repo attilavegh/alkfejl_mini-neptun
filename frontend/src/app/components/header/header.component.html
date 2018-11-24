@@ -1,0 +1,28 @@
+<mat-toolbar class="header">
+  <mat-toolbar-row class="header__row">
+      <span routerLink="/timetable" class="header__title">
+        Mini neptun
+      </span>
+
+    <div class="header__navigation">
+      <span *ngIf="currentUser.role === role.STUDENT">
+        <button mat-button routerLink="/subjects" class="header__navigation-button">
+          Tárgyak listázása
+        </button>
+        <button mat-button routerLink="/timetable" class="header__navigation-button">
+          Órarend
+        </button>
+      </span>
+
+      <span *ngIf="currentUser.role === role.TEACHER">
+        <button mat-button routerLink="/subjects" class="header__navigation-button">
+          Tárgyak listázása
+        </button>
+      </span>
+
+      <button mat-button routerLink="/login" class="header__navigation-button">
+        Kilépés
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

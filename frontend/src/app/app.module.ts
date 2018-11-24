@@ -1,22 +1,50 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './header/header.component';
-import {MaterialModule} from './material.module';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './modules/app-routing.module';
+import {HeaderComponent} from './components/header/header.component';
+import {MaterialModule} from './modules/material.module';
+import {TimetableComponent} from './components/timetable/timetable.component';
+import {TokenInterceptorService} from './services/token-interceptor/token-interceptor.service';
+import {StudentSubjectManagementComponent} from './components/student-subject-management/student-subject-management.component';
+import {TeacherSubjectManagementComponent} from './components/teacher-subject-management/teacher-subject-management.component';
+import {PageTitleComponent} from './components/page-title/page-title.component';
+import {SubjectManagementComponent} from './components/subject-management/subject-management.component';
+import {SubjectDetailComponent} from './components/subject-detail/subject-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    TimetableComponent,
+    StudentSubjectManagementComponent,
+    TeacherSubjectManagementComponent,
+    PageTitleComponent,
+    SubjectManagementComponent,
+    SubjectDetailComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    MaterialModule
+    RouterModule,
+    BrowserModule,
+    HttpClientModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
