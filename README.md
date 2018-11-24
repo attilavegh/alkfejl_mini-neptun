@@ -88,7 +88,7 @@ A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja 
 
 ## Drótvázterv
 
-![Az oldal drótvázterve](/docs/wireframe.pdf)
+![Az oldal drótvázterve](/docs/wireframe)
 
 ## Fejlesztői környezet
 
