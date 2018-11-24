@@ -3,6 +3,8 @@ package hu.elte.minineptun.controllers;
 import hu.elte.minineptun.entities.Role;
 import hu.elte.minineptun.entities.Student;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +65,8 @@ public class StudentController {
         student.setId(null);
         student.setPassword(passwordEncoder.encode(student.getPassword()));
         student.setRole(Role.ROLE_STUDENT);
+        student.setSemester(1);
+        student.setYearStarted(Calendar.getInstance().get(Calendar.YEAR));
         return ResponseEntity.ok(studentRepository.save(student));
     }
 
