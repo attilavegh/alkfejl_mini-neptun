@@ -14,10 +14,10 @@ import {AuthorizationService} from '../../services/authorization/authorization.s
 export class SubjectDetailComponent implements OnInit {
 
   subjectForm = this.formBuilder.group({
-    name: ['', Validators.required],
-    day: ['', Validators.required],
-    time: ['', Validators.required],
-    location: ['', Validators.required]
+    name: [null, Validators.required],
+    day: [null, Validators.required],
+    time: [null, Validators.required],
+    location: [null, Validators.required]
   });
 
   selectedSubject: Subject;

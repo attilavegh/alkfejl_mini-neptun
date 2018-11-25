@@ -9,6 +9,10 @@ export class AuthorizationService {
   constructor() {
   }
 
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('isLoggedIn');
+  }
+
   getCurrentUser(): User {
     return {
       id: 4,

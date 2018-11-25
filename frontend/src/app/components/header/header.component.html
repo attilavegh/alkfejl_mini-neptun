@@ -1,4 +1,4 @@
-<mat-toolbar class="header">
+<mat-toolbar class="header" *ngIf="auth.isLoggedIn()">
   <mat-toolbar-row class="header__row">
       <span routerLink="/timetable" class="header__title">
         Mini neptun
@@ -20,9 +20,13 @@
         </button>
       </span>
 
-      <button mat-button routerLink="/login" class="header__navigation-button">
-        Kilépés
+      <button mat-button [matMenuTriggerFor]="menu" class="header__navigation-button">
+        {{currentUser.name}}
       </button>
+      <mat-menu #menu="matMenu">
+        <button routerLink="/user" mat-menu-item>Adatok</button>
+        <button routerLink="/login" mat-menu-item>Kilépés</button>
+      </mat-menu>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

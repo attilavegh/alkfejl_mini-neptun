@@ -10,12 +10,12 @@ import {SubjectDetailComponent} from '../components/subject-detail/subject-detai
 import {TeacherGuard} from '../services/guards/teacher.guard';
 
 const routes: Routes = [
+  {path: 'login', component: AppComponent},
   {path: '', redirectTo: 'subjects', pathMatch: 'full'},
   {path: 'subjects', component: SubjectManagementComponent},
   {path: 'subjects/new', component: SubjectDetailComponent, canActivate: [TeacherGuard]},
   {path: 'subjects/edit/:id', component: SubjectDetailComponent, canActivate: [TeacherGuard]},
-  {path: 'timetable', component: TimetableComponent, canActivate: [StudentGuard]},
-  {path: 'login', component: AppComponent}
+  {path: 'timetable', component: TimetableComponent, canActivate: [StudentGuard]}
 ];
 
 @NgModule({

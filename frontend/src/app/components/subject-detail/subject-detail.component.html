@@ -3,23 +3,23 @@
     <app-page-title *ngIf="!selectedSubject" title="Tárgy létrehozás"></app-page-title>
     <app-page-title *ngIf="selectedSubject" title="Tárgy szerkesztése"></app-page-title>
 
-    <mat-card-content>
-      <form (ngSubmit)="onSubmit()" [formGroup]="subjectForm">
-        <mat-form-field class="subject-detail__field">
+    <form [formGroup]="subjectForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="subject-detail__form">
+        <mat-form-field class="subject-detail__form-field">
           <input matInput placeholder="Név" formControlName="name">
         </mat-form-field>
-        <mat-form-field class="subject-detail__field">
+        <mat-form-field class="subject-detail__form-field">
           <input matInput placeholder="Nap" formControlName="day">
         </mat-form-field>
-        <mat-form-field class="subject-detail__field">
+        <mat-form-field class="subject-detail__form-field">
           <input matInput placeholder="Időpont" formControlName="time">
         </mat-form-field>
-        <mat-form-field class="subject-detail__field">
+        <mat-form-field class="subject-detail__form-field">
           <input matInput placeholder="Terem" formControlName="location">
         </mat-form-field>
-      </form>
-    </mat-card-content>
 
-    <button mat-button (click)="onSubmit()">Mentés</button>
+        <button class="subject-detail__submit-button" type="submit" [disabled]="!subjectForm.valid" mat-button>Mentés</button>
+      </mat-card-content>
+    </form>
   </mat-card>
 </div>
