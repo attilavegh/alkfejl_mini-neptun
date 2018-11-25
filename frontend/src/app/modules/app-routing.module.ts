@@ -8,7 +8,6 @@ import {SubjectDetailComponent} from '../components/subject-management/component
 import {AuthorizationGuard} from '../services/guards/authorization.guard';
 import {LoginComponent} from '../components/login/login.component';
 import {RegisterComponent} from '../components/register/register.component';
-import {TeacherGuard} from '../services/guards/teacher.guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -16,7 +15,7 @@ const routes: Routes = [
   {path: '', canActivateChild: [AuthorizationGuard], children: [
       {path: '', redirectTo: 'subjects', pathMatch: 'full'},
       {path: 'subjects', component: SubjectManagementComponent},
-      {path: 'subjects/new', component: SubjectDetailComponent, canActivate: [TeacherGuard]},
+      {path: 'subjects/new', component: SubjectDetailComponent},
       {path: 'subjects/edit/:id', component: SubjectDetailComponent},
       {path: 'timetable', component: TimetableComponent}
     ]
