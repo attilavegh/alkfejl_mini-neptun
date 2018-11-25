@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {SubjectService} from '../../services/subject/subject.service';
-import {Subject} from '../../models/subject.model';
-import {AuthorizationService} from '../../services/authorization/authorization.service';
+import {SubjectService} from '../../../../services/subject/subject.service';
+import {Subject} from '../../../../models/subject.model';
+import {AuthorizationService} from '../../../../services/authorization/authorization.service';
 
 @Component({
   selector: 'app-subject-detail',

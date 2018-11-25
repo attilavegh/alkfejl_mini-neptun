@@ -5,7 +5,7 @@ import {CommonModule} from '@angular/common';
 import {TimetableComponent} from '../components/timetable/timetable.component';
 import {SubjectManagementComponent} from '../components/subject-management/subject-management.component';
 import {StudentGuard} from '../services/guards/student.guard';
-import {SubjectDetailComponent} from '../components/subject-detail/subject-detail.component';
+import {SubjectDetailComponent} from '../components/subject-management/components/subject-detail/subject-detail.component';
 import {TeacherGuard} from '../services/guards/teacher.guard';
 import {AuthorizationGuard} from '../services/guards/authorization.guard';
 import {LoginComponent} from '../components/login/login.component';

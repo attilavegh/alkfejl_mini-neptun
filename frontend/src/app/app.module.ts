@@ -20,7 +20,7 @@ import {RegisterComponent} from './components/register/register.component';
 import {StudentRegistrationComponent} from './components/register/components/student-registration/student-registration.component';
 import {TeacherRegistrationComponent} from './components/register/components/teacher-registration/teacher-registration.component';
 import {ErrorPanelComponent} from './components/error-panel/error-panel.component';
-import {SubjectDetailComponent} from './components/subject-detail/subject-detail.component';
+import {SubjectDetailComponent} from './components/subject-management/components/subject-detail/subject-detail.component';
 
 @NgModule({
   declarations: [

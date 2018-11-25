@@ -24,10 +24,7 @@ export class AuthorizationService {
 
     return this.client.get<Student | Teacher>(environment.apiUrl + 'users/' + username, {
       headers: {'Authorization': `Basic ${token}`}
-    }).pipe(
-      take(1),
-      tap(user => this.onLogin(user, username, password))
-    );
+    }).pipe(tap(user => this.onLogin(user, username, password)));
   }
 
   private onLogin(user: Student | Teacher, username: string, password: string) {
