@@ -99,6 +99,7 @@ A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja 
 - NetBeans és IntelliJ IDE
 - Github a projekt egyszerű megosztásához
 - Maven a dependenciák kezelésére
+- Angular 6
 
 ### Projekt indítása
 
@@ -114,8 +115,15 @@ A diagram egy hallgató bejelentkezését, majd egy tárgy felvételét mutatja 
 
 A fő branch a `master`, melyre közvetlen `push` nem lehetséges, csak külön branchből létrehozott pull request jóváhagyása után lehetséges a `merge`.
 
-## Alkalmazott könyvtárstruktúra 
+## Alkalmazott könyvtárstruktúra
+- Frontend
+  - app
+    - components
+    - models
+    - modules
+    - services
 
+- Backend
   - entities
     - User.java
 	- Teacher.java
