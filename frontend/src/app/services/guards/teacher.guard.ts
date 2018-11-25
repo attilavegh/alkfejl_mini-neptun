@@ -13,6 +13,6 @@ export class TeacherGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    return this.auth.getCurrentUser().role === Role.TEACHER;
+    return this.auth.user.role === Role.TEACHER;
   }
 }

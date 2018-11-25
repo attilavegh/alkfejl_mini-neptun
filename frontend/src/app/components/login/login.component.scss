@@ -1,0 +1,31 @@
+.login {
+  display: flex;
+  justify-content: center;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 30px;
+    width: 50%;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__form-field {
+    width: 100%;
+  }
+
+  &__submit-button {
+    margin-top: 24px;
+  }
+}
+
+.usage {
+  text-align: center;
+  margin-top: 50px;
+}

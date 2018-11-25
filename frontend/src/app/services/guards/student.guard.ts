@@ -13,6 +13,6 @@ export class StudentGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    return this.auth.getCurrentUser().role === Role.STUDENT;
+    return this.auth.user.role === Role.STUDENT;
   }
 }

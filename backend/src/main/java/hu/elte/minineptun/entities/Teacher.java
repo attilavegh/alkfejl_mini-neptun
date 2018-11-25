@@ -27,5 +27,5 @@ public class Teacher extends User implements Serializable {
     private String room;
 
     @OneToMany(mappedBy = "teacher")
-    private List<Subject> subjectList;
+    private List<Subject> subjects;
 }

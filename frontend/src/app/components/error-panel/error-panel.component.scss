@@ -1,0 +1,13 @@
+.error {
+  background-color: #ff2e51;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  &__content {
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+  }
+}

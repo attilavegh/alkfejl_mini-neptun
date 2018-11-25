@@ -1,0 +1,29 @@
+<form [formGroup]="teacherRegisterForm" (ngSubmit)="onSubmit()">
+  <mat-card-content class="register__form">
+    <mat-form-field class="register__form-field">
+      <input matInput placeholder="Felhasználónév" formControlName="username">
+    </mat-form-field>
+
+    <mat-form-field class="register__form-field">
+      <input matInput type="password" placeholder="Jelszó" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field class="register__form-field">
+      <input matInput type="password" placeholder="Jelszó megerősítése" formControlName="passwordConfirm">
+    </mat-form-field>
+
+    <mat-form-field class="register__form-field">
+      <input matInput placeholder="Név" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="register__form-field">
+      <input matInput placeholder="Tanszék" formControlName="department">
+    </mat-form-field>
+
+    <mat-form-field class="register__form-field">
+      <input matInput placeholder="Szoba" formControlName="room">
+    </mat-form-field>
+
+    <button class="register__submit-button" type="submit" [disabled]="!teacherRegisterForm.valid" mat-button>Regisztárció</button>
+  </mat-card-content>
+</form>

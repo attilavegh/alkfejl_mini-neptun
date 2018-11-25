@@ -13,7 +13,7 @@ export class SubjectManagementComponent implements OnInit {
   currentUser: User;
 
   constructor(private auth: AuthorizationService) {
-    this.currentUser = this.auth.getCurrentUser();
+    this.currentUser = this.auth.user;
   }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Role, User} from '../../models/user.model';
+import {Component} from '@angular/core';
+
 import {AuthorizationService} from '../../services/authorization/authorization.service';
 
 @Component({
@@ -7,15 +7,13 @@ import {AuthorizationService} from '../../services/authorization/authorization.s
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-
-  role = Role;
-  currentUser: User;
+export class HeaderComponent {
 
   constructor(private auth: AuthorizationService) {
-    this.currentUser = this.auth.getCurrentUser();
   }
 
-  ngOnInit() {
+  onLogout() {
+    localStorage.clear();
+    this.auth.user = null;
   }
 }

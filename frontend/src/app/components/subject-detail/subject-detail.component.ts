@@ -37,7 +37,7 @@ export class SubjectDetailComponent implements OnInit {
     if (this.selectedSubject) {
       this.subjectService.modifySubject(this.createModifiedSubject()).subscribe();
     } else {
-      this.subjectService.addSubject(this.auth.getCurrentUser().id, this.subjectForm.value).subscribe();
+      this.subjectService.addSubject(this.auth.user.id, this.subjectForm.value).subscribe();
     }
   }
 

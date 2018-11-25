@@ -1,32 +1,46 @@
-<mat-toolbar class="header" *ngIf="auth.isLoggedIn()">
-  <mat-toolbar-row class="header__row">
+<mat-toolbar class="header">
+  <mat-toolbar-row class="header__row" *ngIf="auth.isLoggedIn()">
       <span routerLink="/timetable" class="header__title">
         Mini neptun
       </span>
 
     <div class="header__navigation">
-      <span *ngIf="currentUser.role === role.STUDENT">
+      <div *ngIf="auth.isStudent()">
         <button mat-button routerLink="/subjects" class="header__navigation-button">
           Tárgyak listázása
         </button>
         <button mat-button routerLink="/timetable" class="header__navigation-button">
           Órarend
         </button>
-      </span>
+      </div>
 
-      <span *ngIf="currentUser.role === role.TEACHER">
+      <div *ngIf="auth.isTeacher()">
         <button mat-button routerLink="/subjects" class="header__navigation-button">
           Tárgyak listázása
         </button>
-      </span>
+      </div>
 
-      <button mat-button [matMenuTriggerFor]="menu" class="header__navigation-button">
-        {{currentUser.name}}
+      <button *ngIf="auth.user" mat-button [matMenuTriggerFor]="menu" class="header__navigation-button">
+        {{auth.user.name}}
       </button>
       <mat-menu #menu="matMenu">
-        <button routerLink="/user" mat-menu-item>Adatok</button>
-        <button routerLink="/login" mat-menu-item>Kilépés</button>
+        <button routerLink="/login" (click)="onLogout()" mat-menu-item>Kilépés</button>
       </mat-menu>
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="header__row" *ngIf="!auth.isLoggedIn()">
+    <span routerLink="/login" class="header__title">
+      Mini neptun
+    </span>
+
+    <div>
+      <button mat-button routerLinkActive="mat-primary" routerLink="/login" class="header__navigation-button">
+        Belépés
+      </button>
+      <button mat-button routerLinkActive="mat-primary" routerLink="/register" class="header__navigation-button">
+        Regiszráció
+      </button>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

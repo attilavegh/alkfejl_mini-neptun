@@ -4,6 +4,10 @@
     outline: none;
   }
 
+  &__navigation {
+    display: inherit;
+  }
+
   &__row {
     display: flex;
     justify-content: space-between;

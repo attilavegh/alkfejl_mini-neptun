@@ -17,7 +17,7 @@ export class SubjectService {
   private cache: Subject[];
 
   constructor(private http: HttpClient,
-              private authService: AuthorizationService) {
+              private auth: AuthorizationService) {
   }
 
   getAllSubjects(): Observable<ExtendedSubject[]> {
@@ -25,10 +25,6 @@ export class SubjectService {
       tap((subjects: Subject[]) => this.setCache(subjects)),
       map((subjects: Subject[]) => this.markTakenSubjects(subjects))
     );
-  }
-
-  getTimetable(username: string): Observable<Subject[]> {
-    return this.http.get<Subject[]>(environment.apiUrl + 'students/' + username + '/subjects');
   }
 
   addSubject(teacherId: number, subject: Subject): Observable<Subject> {
@@ -50,7 +46,7 @@ export class SubjectService {
   }
 
   private markTakenSubjects(subjects: Subject[]): ExtendedSubject[] {
-    const currentUser: User = this.authService.getCurrentUser();
+    const currentUser: User = this.auth.user;
     const extendedSubjects: ExtendedSubject[] = [];
 
     subjects.forEach((subject: Subject) => {

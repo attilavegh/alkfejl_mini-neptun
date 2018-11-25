@@ -1,0 +1,30 @@
+<div class="register">
+  <mat-card class="register__content">
+    <app-page-title title="Regisztráció"></app-page-title>
+
+    <mat-toolbar class="register__type">
+      <mat-toolbar-row>
+        <div class="register__type-button-wrapper">
+          <button [color]="registrationType === role.STUDENT ? 'primary' : null" type="button"
+                  mat-button (click)="switchToStudentRegistration()" class="register__type-button">
+            Diák
+          </button>
+          <button [color]="registrationType === role.TEACHER ? 'primary' : null" type="button"
+                  mat-button (click)="switchToTeacherRegistration()" class="register__type-button">
+            Tanár
+          </button>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="register__form-wrapper">
+      <app-student-registration *ngIf="registrationType === role.STUDENT" (onStudentRegister)="onStudentRegister($event)">
+      </app-student-registration>
+
+      <app-teacher-registration *ngIf="registrationType === role.TEACHER" (onTeacherRegister)="onTeacherRegister($event)">
+      </app-teacher-registration>
+    </div>
+
+  </mat-card>
+</div>
+

@@ -1,0 +1,25 @@
+<div class="login">
+  <mat-card class="login__content">
+    <app-page-title title="Bejelentkezés"></app-page-title>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="login__form">
+        <mat-form-field class="login__form-field">
+          <input matInput placeholder="Felhasználónév" formControlName="username">
+        </mat-form-field>
+        <mat-form-field class="login__form-field">
+          <input matInput type="password" placeholder="Jelszó" formControlName="password">
+        </mat-form-field>
+
+        <app-error-panel *ngIf="isLoginFailed" [error]="'Sikertelen bejelentkezés'"></app-error-panel>
+        <button class="login__submit-button" type="submit" [disabled]="!loginForm.valid" mat-button>
+          Bejelentkezés
+        </button>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
+
+<mat-card class="usage">
+    Backend indítása <br> Bejelentkezés <br> Tanár: username: user4, password: user4 <br> diák: username: user1, password: user1
+</mat-card>

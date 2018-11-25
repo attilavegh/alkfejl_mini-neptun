@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 
 import {Observable} from 'rxjs';
 
-import {SubjectService} from '../../services/subject/subject.service';
-import {ExtendedSubject} from '../../models/subject.model';
+import {SubjectService} from '../../../../services/subject/subject.service';
+import {ExtendedSubject} from '../../../../models/subject.model';
 
 @Component({
   selector: 'app-student-subject-management',
