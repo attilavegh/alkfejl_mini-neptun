@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
 
   constructor(private formBuilder: FormBuilder,
-              private auth: AuthorizationService) {
+              private auth: AuthorizationService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.auth.login(this.username, this.password).pipe(
+      tap(() => this.router.navigate(['subjects'])),
       catchError(() => {
         this.isLoginFailed = true;
         return of();

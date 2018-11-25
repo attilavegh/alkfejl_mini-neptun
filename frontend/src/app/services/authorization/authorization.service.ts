@@ -5,8 +5,7 @@ import {Observable} from 'rxjs';
 
 import {Role, Student, Teacher} from '../../models/user.model';
 import {environment} from '../../../environments/environment';
-import {take, tap} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +14,7 @@ export class AuthorizationService {
 
   private currentUser: Student | Teacher;
 
-  constructor(private client: HttpClient,
-              private router: Router) {
+  constructor(private client: HttpClient) {
   }
 
   login(username: string, password: string): Observable<Student | Teacher> {
@@ -29,9 +27,7 @@ export class AuthorizationService {
 
   private onLogin(user: Student | Teacher, username: string, password: string) {
     localStorage.setItem('token', btoa(username + ':' + password));
-
     this.currentUser = user;
-    this.router.navigate(['subjects']);
   }
 
   isLoggedIn(): boolean {
