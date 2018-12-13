@@ -18,13 +18,16 @@
     </mat-toolbar>
 
     <div class="register__form-wrapper">
-      <app-student-registration *ngIf="registrationType === role.STUDENT" (onStudentRegister)="onStudentRegister($event)">
+      <app-student-registration *ngIf="registrationType === role.STUDENT"
+                                (onStudentRegister)="onStudentRegister($event)"
+                                (onMatchingPasswords)="onMatchingPasswords()">
       </app-student-registration>
 
       <app-teacher-registration *ngIf="registrationType === role.TEACHER" (onTeacherRegister)="onTeacherRegister($event)">
       </app-teacher-registration>
     </div>
 
+    <app-error-panel *ngIf="registrationError" [error]=registrationErrorMessage></app-error-panel>
   </mat-card>
 </div>
 

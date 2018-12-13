@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 import {ExtendedSubject, Subject} from '../../models/subject.model';
 import {environment} from '../../../environments/environment';
@@ -14,17 +14,22 @@ import {User} from '../../models/user.model';
 })
 export class SubjectService {
 
-  private cache: Subject[];
-
   constructor(private http: HttpClient,
               private auth: AuthorizationService) {
   }
 
   getAllSubjects(): Observable<ExtendedSubject[]> {
     return this.http.get<Subject[]>(environment.apiUrl + 'subjects').pipe(
-      tap((subjects: Subject[]) => this.setCache(subjects)),
       map((subjects: Subject[]) => this.markTakenSubjects(subjects))
     );
+  }
+
+  getAllSubjectsForTeacher(): Observable<Subject[]> {
+    return this.http.get<Subject[]>(environment.apiUrl + 'subjects/teacher');
+  }
+
+  getSubjectById(id: number): Observable<Subject> {
+    return this.http.get<Subject>(environment.apiUrl + 'subjects/' + id);
   }
 
   addSubject(teacherId: number, subject: Subject): Observable<Subject> {
@@ -37,12 +42,6 @@ export class SubjectService {
 
   deleteSubject(id: number): Observable<Subject> {
     return this.http.delete<Subject>(environment.apiUrl + 'subjects/' + id);
-  }
-
-  getAllSubjectByIdFromCache(id: number): Subject {
-    if (this.cache) {
-      return this.cache.find(item => item.id === id);
-    }
   }
 
   private markTakenSubjects(subjects: Subject[]): ExtendedSubject[] {
@@ -58,9 +57,5 @@ export class SubjectService {
     });
 
     return extendedSubjects;
-  }
-
-  private setCache(subjects: Subject[]) {
-    this.cache = subjects;
   }
 }

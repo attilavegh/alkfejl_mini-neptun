@@ -1,21 +1,21 @@
 <mat-toolbar class="header">
   <mat-toolbar-row class="header__row" *ngIf="auth.isLoggedIn()">
-      <span routerLink="/timetable" class="header__title">
+      <span routerLink="/subjects" class="header__title">
         Mini neptun
       </span>
 
     <div class="header__navigation">
       <div *ngIf="auth.isStudent()">
-        <button mat-button routerLink="/subjects" class="header__navigation-button">
+        <button mat-button routerLinkActive="mat-primary" routerLink="/subjects" class="header__navigation-button">
           Tárgyak listázása
         </button>
-        <button mat-button routerLink="/timetable" class="header__navigation-button">
+        <button mat-button routerLinkActive="mat-primary" routerLink="/timetable" class="header__navigation-button">
           Órarend
         </button>
       </div>
 
       <div *ngIf="auth.isTeacher()">
-        <button mat-button routerLink="/subjects" class="header__navigation-button">
+        <button mat-button routerLinkActive="mat-primary" routerLink="/subjects" class="header__navigation-button">
           Tárgyak listázása
         </button>
       </div>
@@ -25,6 +25,7 @@
       </button>
       <mat-menu #menu="matMenu">
         <button routerLink="/login" (click)="onLogout()" mat-menu-item>Kilépés</button>
+        <button routerLink="/user" mat-menu-item>Adatok</button>
       </mat-menu>
     </div>
   </mat-toolbar-row>

@@ -2,9 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
+import {catchError, filter, map, take} from 'rxjs/operators';
+
 import {SubjectService} from '../../../../services/subject/subject.service';
 import {Subject} from '../../../../models/subject.model';
 import {AuthorizationService} from '../../../../services/authorization/authorization.service';
+import {ConfirmationDialogService} from '../../../../services/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-subject-detail',
@@ -14,58 +17,82 @@ import {AuthorizationService} from '../../../../services/authorization/authoriza
 export class SubjectDetailComponent implements OnInit {
 
   subjectForm = this.formBuilder.group({
-    name: [null, Validators.required],
-    day: [null, Validators.required],
-    time: [null, Validators.required],
-    location: [null, Validators.required]
+    name: ['', Validators.required],
+    day: ['', Validators.required],
+    time: ['', Validators.required],
+    location: ['', Validators.required]
   });
 
-  selectedSubject: Subject;
+  private subjectId: number;
 
   constructor(private subjectService: SubjectService,
               private auth: AuthorizationService,
               private route: ActivatedRoute,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private dialog: ConfirmationDialogService) {
   }
 
   ngOnInit() {
-    this.assignSubjectOnEdit();
+    const urlSubjectParam = this.getUrlParam();
+
+    if (urlSubjectParam) {
+      this.initModification(urlSubjectParam).subscribe();
+    } else {
+      this.fallbackToNewSubject();
+    }
   }
 
   onSubmit() {
-    if (this.selectedSubject) {
-      this.subjectService.modifySubject(this.createModifiedSubject()).subscribe();
+    if (this.subjectId) {
+      this.subjectService.modifySubject(this.createModifiedSubject()).pipe(
+        map(() => this.backToSubjects()),
+        catchError(() => {
+          this.backToSubjects();
+          return this.dialog.open({title: 'Hiba a tárgy modosítása közben.', closeText: 'Bezárás'});
+        })
+      ).subscribe();
     } else {
-      this.subjectService.addSubject(this.auth.user.id, this.subjectForm.value).subscribe();
+      this.subjectService.addSubject(this.auth.user.id, this.subjectForm.value).pipe(
+        map(() => this.backToSubjects()),
+        catchError(() => this.dialog.open({title: 'Hiba a tárgy modosítása közben.', closeText: 'Bezárás'}))
+      ).subscribe();
     }
   }
 
-  private assignSubjectOnEdit() {
-    this.getSubject();
+  private getUrlParam() {
+    return parseInt(this.route.snapshot.paramMap.get('id'), 10);
+  }
 
-    if (this.selectedSubject) {
-      this.subjectForm.get('name').setValue(this.selectedSubject.name);
-      this.subjectForm.get('day').setValue(this.selectedSubject.day);
-      this.subjectForm.get('time').setValue(this.selectedSubject.time);
-      this.subjectForm.get('location').setValue(this.selectedSubject.location);
-    } else {
-      this.router.navigate(['/subjects/new']);
-    }
-  };
+  private initModification(subjectId: number) {
+    return this.subjectService.getSubjectById(subjectId).pipe(
+      take(1),
+      filter((subject: Subject) => !!subject),
+      map((subject: Subject) => this.fillSubjectForm(subject)),
+      catchError(() => this.fallbackToNewSubject())
+    );
+  }
 
-  private getSubject() {
-    const subjectId = parseInt(this.route.snapshot.paramMap.get('id'));
+  private fillSubjectForm(subject: Subject) {
+    this.subjectId = subject.id;
+    this.subjectForm.get('name').setValue(subject.name);
+    this.subjectForm.get('day').setValue(subject.day);
+    this.subjectForm.get('time').setValue(subject.time);
+    this.subjectForm.get('location').setValue(subject.location);
+  }
 
-    if (subjectId) {
-      this.selectedSubject = this.subjectService.getAllSubjectByIdFromCache(subjectId);
-    }
+  private fallbackToNewSubject() {
+    return this.router.navigate(['/subjects/new']);
+  }
+
+  private backToSubjects() {
+    return this.router.navigate(['subjects']);
   }
 
   private createModifiedSubject(): Subject {
     return {
       ...this.subjectForm.value,
-      id: this.selectedSubject.id
+      id: this.subjectId
     };
   }
 }

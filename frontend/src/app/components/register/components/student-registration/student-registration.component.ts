@@ -1,7 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Student} from '../../../../models/user.model';
-import {checkPasswords} from '../../register.component';
 
 @Component({
   selector: 'app-student-registration',
@@ -11,18 +10,22 @@ import {checkPasswords} from '../../register.component';
 export class StudentRegistrationComponent {
 
   studentRegisterForm = this.formBuilder.group({
-    username: [null, Validators.required],
-    password: [null, Validators.required],
-    passwordConfirm: [null, Validators.required],
-    name: [null, Validators.required],
-  }, {validators: checkPasswords});
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+    name: ['', Validators.required],
+  });
 
   @Output() onStudentRegister = new EventEmitter<Student>();
+  @Output() onMatchingPasswords = new EventEmitter<boolean>();
 
   constructor(private formBuilder: FormBuilder) {
   }
 
   onSubmit() {
+    if (this.studentRegisterForm.get('password').invalid) {
+      this.onMatchingPasswords.emit();
+    }
+
     if (this.studentRegisterForm.valid) {
       this.onStudentRegister.emit(this.studentRegisterForm.value);
     }

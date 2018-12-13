@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 import hu.elte.minineptun.entities.Subject;
+import hu.elte.minineptun.entities.User;
 import hu.elte.minineptun.repositories.StudentRepository;
 import hu.elte.minineptun.repositories.SubjectRepository;
+import hu.elte.minineptun.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -24,26 +26,13 @@ public class StudentController {
     private StudentRepository studentRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private SubjectRepository subjectRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    @GetMapping()
-    @Secured("ROLE_TEACHER")
-    public ResponseEntity<Iterable<Student>> getAllStudents() {
-        return ResponseEntity.ok(studentRepository.findAll());
-    }
-
-    @GetMapping("/{username}")
-    public ResponseEntity<Student> getStudentByUsername(@PathVariable String username) {
-        Optional<Student> oStudent = studentRepository.findByUsername(username);
-        if (!oStudent.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(oStudent.get());
-    }
 
     @GetMapping("/{username}/subjects")
     public ResponseEntity<List<Subject>> getSubjectsByUsername(@PathVariable String username) {
@@ -57,7 +46,8 @@ public class StudentController {
 
     @PostMapping("/register")
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
-        Optional<Student> oStudent = studentRepository.findByUsername(student.getUsername());
+        Optional<User> oStudent = userRepository.findByUsername(student.getUsername());
+
         if (oStudent.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
@@ -90,38 +80,6 @@ public class StudentController {
 
         oStudent.get().setSubjects(student.getSubjects());
         return ResponseEntity.ok(studentRepository.save(oStudent.get()));
-    }
-
-    @PutMapping("/{id}")
-    @Secured("ROLE_TEACHER")
-    public ResponseEntity<Student> modifyStudentById(@PathVariable Integer id,
-                                                     @RequestBody Student student) {
-        Optional<Student> oStudent = studentRepository.findById(id);
-        if (!oStudent.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (student.getPassword() == null) {
-            student.setPassword(oStudent.get().getPassword());
-        } else {
-            student.setPassword(passwordEncoder.encode(student.getPassword()));
-        }
-
-        student.setId(id);
-        student.setRole(Role.ROLE_STUDENT);
-        return ResponseEntity.ok(studentRepository.save(student));
-    }
-
-    @DeleteMapping("/{id}")
-    @Secured("ROLE_TEACHER")
-    public ResponseEntity deleteStudentById(@PathVariable Integer id) {
-        Optional<Student> oStudent = studentRepository.findById(id);
-        if (!oStudent.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        studentRepository.delete(oStudent.get());
-        return ResponseEntity.ok().build();
     }
 }
 

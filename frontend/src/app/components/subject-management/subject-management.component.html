@@ -1,2 +1,2 @@
-<app-student-subject-management *ngIf="currentUser.role === role.STUDENT"></app-student-subject-management>
+<app-student-subject-management *ngIf="currentUser.role === role.STUDENT" [currentUser]="currentUser"></app-student-subject-management>
 <app-teacher-subject-management *ngIf="currentUser.role === role.TEACHER"></app-teacher-subject-management>

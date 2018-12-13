@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Subject} from '../../models/subject.model';
+
 import {Observable} from 'rxjs';
+
+import {Subject} from '../../models/subject.model';
 import {StudentService} from '../../services/student/student.service';
+import {AuthorizationService} from '../../services/authorization/authorization.service';
 
 @Component({
   selector: 'app-timetable',
@@ -13,10 +16,11 @@ export class TimetableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'day', 'time', 'location'];
   subjects$: Observable<Subject[]>;
 
-  constructor(private studentService: StudentService) {
+  constructor(private studentService: StudentService,
+              private auth: AuthorizationService) {
   }
 
   ngOnInit() {
-    this.subjects$ = this.studentService.getTimetable('user1');
+    this.subjects$ = this.studentService.getTimetable(this.auth.user.username);
   }
 }

@@ -40,8 +40,8 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button (click)="onAdd(subject.id)" mat-menu-item [disabled]="subject.isTaken">Felvétel</button>
-          <button (click)="onRemove(subject.id)" mat-menu-item [disabled]="!subject.isTaken">Leadás</button>
+          <button (click)="onAdd(subject)" mat-menu-item [disabled]="subject.isTaken">Felvétel</button>
+          <button (click)="onRemove(subject)" mat-menu-item [disabled]="!subject.isTaken">Leadás</button>
         </mat-menu>
       </td>
     </ng-container>

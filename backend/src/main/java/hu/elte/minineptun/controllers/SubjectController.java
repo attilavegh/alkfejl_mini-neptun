@@ -3,14 +3,20 @@ package hu.elte.minineptun.controllers;
 import hu.elte.minineptun.entities.Student;
 import hu.elte.minineptun.entities.Subject;
 import hu.elte.minineptun.entities.Teacher;
+import hu.elte.minineptun.repositories.StudentRepository;
 import hu.elte.minineptun.repositories.SubjectRepository;
 import hu.elte.minineptun.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.security.access.annotation.Secured;
 
 @RestController
@@ -23,9 +29,24 @@ public class SubjectController {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private StudentRepository studentRepository;
+
     @GetMapping()
     public ResponseEntity<Iterable<Subject>> getAllSubjects() {
         return ResponseEntity.ok(subjectRepository.findAll());
+    }
+
+    @GetMapping("/teacher")
+    public ResponseEntity<Iterable<Subject>> getTeacherSubjects(@RequestHeader("authorization") String token) {
+        ArrayList<Subject> subjects = new ArrayList<>();
+        subjectRepository.findAll().forEach(subjects::add);
+
+        List<Subject> filteredSubjects = subjects.stream()
+                .filter(subject -> subject.getTeacher().getUsername().equals(getUsername(token)))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filteredSubjects);
     }
 
     @GetMapping("/{id}")
@@ -36,26 +57,6 @@ public class SubjectController {
         }
 
         return ResponseEntity.ok(oSubject.get());
-    }
-
-    @GetMapping("/name/{name}")
-    public ResponseEntity<Subject> getSubjectByName(@PathVariable String name) {
-        Optional<Subject> oSubject = subjectRepository.findByName(name);
-        if (!oSubject.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(oSubject.get());
-    }
-
-    @GetMapping("/{id}/teacher")
-    public ResponseEntity<Teacher> getTeacherBySubjectId(@PathVariable Integer id) {
-        Optional<Subject> oSubject = subjectRepository.findById(id);
-        if (!oSubject.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(oSubject.get().getTeacher());
     }
 
     @GetMapping("/{id}/students")
@@ -85,11 +86,16 @@ public class SubjectController {
 
     @PutMapping("/{id}")
     @Secured("ROLE_TEACHER")
-    public ResponseEntity<Subject> modifySubjectById(@PathVariable Integer id,
+    public ResponseEntity<Subject> modifySubjectById(@RequestHeader("authorization") String token,
+                                                     @PathVariable Integer id,
                                                      @RequestBody Subject subject) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
         if (!oSubject.isPresent()) {
             return ResponseEntity.notFound().build();
+        }
+
+        if (!oSubject.get().getTeacher().getUsername().equals(getUsername(token))) {
+           return ResponseEntity.badRequest().build();
         }
 
         subject.setId(id);
@@ -100,13 +106,29 @@ public class SubjectController {
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_TEACHER")
-    public ResponseEntity<Subject> deleteSubjectById(@PathVariable Integer id) {
+    public ResponseEntity<Subject> deleteSubjectById(@RequestHeader("authorization") String token,
+                                                     @PathVariable Integer id) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
         if (!oSubject.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
+        if (!oSubject.get().getTeacher().getUsername().equals(getUsername(token))) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        studentRepository.findAll().forEach(student -> student.removeSubject(id));
         subjectRepository.delete(oSubject.get());
+
         return ResponseEntity.ok(oSubject.get());
+    }
+
+    private String getUsername(String token) {
+        String base64Credentials = token.substring("Basic".length()).trim();
+        byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
+
+        final String[] credentials = new String(credDecoded, StandardCharsets.UTF_8).split(":", 2);
+
+        return credentials[0];
     }
 }

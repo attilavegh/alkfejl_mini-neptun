@@ -1,0 +1,7 @@
+<div class="confirmation-dialog">
+  <h1 mat-dialog-title>{{data.title}}</h1>
+  <div mat-dialog-actions>
+    <button mat-button *ngIf="data.hasConfirmationAction" (click)="onAction()">{{data.confirmationActionText}}</button>
+    <button mat-button (click)="onClose()">{{data.closeText}}</button>
+  </div>
+</div>

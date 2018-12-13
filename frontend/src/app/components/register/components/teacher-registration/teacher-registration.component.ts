@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {Teacher} from '../../../../models/user.model';
 import {FormBuilder, Validators} from '@angular/forms';
-import {checkPasswords} from '../../register.component';
 
 @Component({
   selector: 'app-teacher-registration',
@@ -11,13 +10,12 @@ import {checkPasswords} from '../../register.component';
 export class TeacherRegistrationComponent {
 
   teacherRegisterForm = this.formBuilder.group({
-    username: [null, Validators.required],
-    password: [null, Validators.required],
-    passwordConfirm: [null, Validators.required],
-    name: [null, Validators.required],
-    department: [null, Validators.required],
-    room: [null, Validators.required],
-  },  {validators: checkPasswords});
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+    name: ['', Validators.required],
+    department: ['', Validators.required],
+    room: ['', Validators.required],
+  });
 
   @Output() onTeacherRegister = new EventEmitter<Teacher>();
 

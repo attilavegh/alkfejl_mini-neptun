@@ -21,6 +21,9 @@ import {StudentRegistrationComponent} from './components/register/components/stu
 import {TeacherRegistrationComponent} from './components/register/components/teacher-registration/teacher-registration.component';
 import {ErrorPanelComponent} from './components/error-panel/error-panel.component';
 import {SubjectDetailComponent} from './components/subject-management/components/subject-detail/subject-detail.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogService} from './services/confirmation-dialog/confirmation-dialog.service';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import {SubjectDetailComponent} from './components/subject-management/components
     RegisterComponent,
     StudentRegistrationComponent,
     TeacherRegistrationComponent,
-    ErrorPanelComponent
+    ErrorPanelComponent,
+    ConfirmationDialogComponent,
+    UserDetailsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -53,6 +58,9 @@ import {SubjectDetailComponent} from './components/subject-management/components
       useClass: TokenInterceptorService,
       multi: true
     }
+  ],
+  entryComponents: [
+    ConfirmationDialogComponent
   ],
   bootstrap: [AppComponent]
 })

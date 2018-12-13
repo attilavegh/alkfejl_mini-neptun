@@ -30,5 +30,9 @@ public class Student extends User implements Serializable {
     @ManyToMany
     @JoinTable
     private List<Subject> subjects;
+
+    public boolean removeSubject(final int id){
+        return subjects.removeIf(subject -> subject.getId() == id);
+    }
 }
 
