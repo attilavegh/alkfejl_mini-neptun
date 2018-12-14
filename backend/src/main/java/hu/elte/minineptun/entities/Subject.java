@@ -38,7 +38,6 @@ public class Subject implements Serializable {
     private String location;
 
     @JoinColumn
-    @JsonIgnore
     @ManyToOne
     private Teacher teacher;
 

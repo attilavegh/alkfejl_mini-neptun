@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
-import {CanActivate} from '@angular/router';
-
-import {AuthorizationService} from '../authorization/authorization.service';
-import {Role} from '../../models/user.model';
+import {CanActivate, Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherGuard implements CanActivate {
 
-  constructor(private auth: AuthorizationService) {
-  }
+  constructor(private router: Router) {}
 
   canActivate(): boolean {
-    return this.auth.user.role === Role.TEACHER;
-  }
+    const role = localStorage.getItem('role');
+
+    if (role !== 'ROLE_TEACHER') {
+      this.router.navigate(['subjects']);
+      return false;
+    }
+
+    return true;  }
 }

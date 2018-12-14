@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 
 import {Subject} from '../../models/subject.model';
 import {StudentService} from '../../services/student/student.service';
-import {AuthorizationService} from '../../services/authorization/authorization.service';
 
 @Component({
   selector: 'app-timetable',
@@ -13,14 +12,13 @@ import {AuthorizationService} from '../../services/authorization/authorization.s
 })
 export class TimetableComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'day', 'time', 'location'];
+  displayedColumns: string[] = ['id', 'name', 'day', 'time', 'location', 'teacher'];
   subjects$: Observable<Subject[]>;
 
-  constructor(private studentService: StudentService,
-              private auth: AuthorizationService) {
+  constructor(private studentService: StudentService) {
   }
 
   ngOnInit() {
-    this.subjects$ = this.studentService.getTimetable(this.auth.user.username);
+    this.subjects$ = this.studentService.getTimetable();
   }
 }

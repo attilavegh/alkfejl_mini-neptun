@@ -6,7 +6,6 @@ import {catchError, filter, map, take} from 'rxjs/operators';
 
 import {SubjectService} from '../../../../services/subject/subject.service';
 import {Subject} from '../../../../models/subject.model';
-import {AuthorizationService} from '../../../../services/authorization/authorization.service';
 import {ConfirmationDialogService} from '../../../../services/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
@@ -26,7 +25,6 @@ export class SubjectDetailComponent implements OnInit {
   private subjectId: number;
 
   constructor(private subjectService: SubjectService,
-              private auth: AuthorizationService,
               private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
@@ -53,7 +51,7 @@ export class SubjectDetailComponent implements OnInit {
         })
       ).subscribe();
     } else {
-      this.subjectService.addSubject(this.auth.user.id, this.subjectForm.value).pipe(
+      this.subjectService.addSubject(this.subjectForm.value).pipe(
         map(() => this.backToSubjects()),
         catchError(() => this.dialog.open({title: 'Hiba a tárgy modosítása közben.', closeText: 'Bezárás'}))
       ).subscribe();

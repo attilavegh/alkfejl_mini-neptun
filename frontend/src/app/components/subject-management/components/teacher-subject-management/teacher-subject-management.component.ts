@@ -6,6 +6,7 @@ import {catchError, switchMap, tap} from 'rxjs/operators';
 import {Subject} from '../../../../models/subject.model';
 import {SubjectService} from '../../../../services/subject/subject.service';
 import {ConfirmationDialogService} from '../../../../services/confirmation-dialog/confirmation-dialog.service';
+import {TeacherService} from '../../../../services/teacher/teacher.service';
 
 @Component({
   selector: 'app-teacher-subject-management',
@@ -19,7 +20,8 @@ export class TeacherSubjectManagementComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'day', 'time', 'location', 'options'];
 
-  constructor(private subjectService: SubjectService,
+  constructor(private teacherService: TeacherService,
+              private subjectService: SubjectService,
               private dialog: ConfirmationDialogService) {
   }
 
@@ -43,7 +45,7 @@ export class TeacherSubjectManagementComponent implements OnInit {
 
   private getSubjects() {
     this.subjects$ = this.refreshSubjects$.pipe(
-      switchMap(() => this.subjectService.getAllSubjectsForTeacher())
+      switchMap(() => this.teacherService.getAllSubjects())
     );
   }
 }

@@ -1,5 +1,6 @@
 package hu.elte.minineptun.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,6 @@ public class Teacher extends User implements Serializable {
     private String room;
 
     @OneToMany(mappedBy = "teacher")
+    @JsonIgnore
     private List<Subject> subjects;
 }

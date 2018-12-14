@@ -3,10 +3,8 @@ package hu.elte.minineptun.controllers;
 import hu.elte.minineptun.entities.Role;
 import hu.elte.minineptun.entities.Student;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 import hu.elte.minineptun.entities.Subject;
 import hu.elte.minineptun.entities.User;
@@ -20,7 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/student")
 public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
@@ -34,9 +32,9 @@ public class StudentController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping("/{username}/subjects")
-    public ResponseEntity<List<Subject>> getSubjectsByUsername(@PathVariable String username) {
-        Optional<Student> oStudent = studentRepository.findByUsername(username);
+    @GetMapping("/subjects")
+    public ResponseEntity<List<Subject>> getSubjects(@RequestHeader("authorization") String token) {
+        Optional<Student> oStudent = studentRepository.findByUsername(getUsername(token));
         if (!oStudent.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -61,7 +59,8 @@ public class StudentController {
     }
 
     @PatchMapping("/subjects")
-    public ResponseEntity<Student> manageSubjects(@RequestBody Student student) {
+    public ResponseEntity<Student> manageSubjects(@RequestHeader("authorization") String token,
+                                                  @RequestBody Student student) {
         if (student.getSubjects() == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -69,6 +68,10 @@ public class StudentController {
         Optional<Student> oStudent = studentRepository.findByUsername(student.getUsername());
         if (!oStudent.isPresent()) {
             return ResponseEntity.notFound().build();
+        }
+
+        if (!oStudent.get().getUsername().equals(getUsername(token))) {
+            return ResponseEntity.badRequest().build();
         }
 
         for (Subject subject: student.getSubjects()) {
@@ -80,6 +83,16 @@ public class StudentController {
 
         oStudent.get().setSubjects(student.getSubjects());
         return ResponseEntity.ok(studentRepository.save(oStudent.get()));
+    }
+
+
+    private String getUsername(String token) {
+        String base64Credentials = token.substring("Basic".length()).trim();
+        byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
+
+        final String[] credentials = new String(credDecoded, StandardCharsets.UTF_8).split(":", 2);
+
+        return credentials[0];
     }
 }
 

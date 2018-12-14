@@ -19,7 +19,7 @@ export class StudentSubjectManagementComponent implements OnInit {
   subjects$: Observable<ExtendedSubject[]>;
   refreshSubjects$ = new BehaviorSubject<boolean>(true);
 
-  displayedColumns: string[] = ['id', 'name', 'day', 'time', 'location', 'isTaken', 'options'];
+  displayedColumns: string[] = ['id', 'name', 'day', 'time', 'location', 'teacher', 'isTaken', 'options'];
   @Input() currentUser: Student;
 
   constructor(private subjectService: SubjectService,

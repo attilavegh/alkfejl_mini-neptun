@@ -19,29 +19,25 @@ export class SubjectService {
   }
 
   getAllSubjects(): Observable<ExtendedSubject[]> {
-    return this.http.get<Subject[]>(environment.apiUrl + 'subjects').pipe(
+    return this.http.get<Subject[]>(environment.apiUrl + 'subject').pipe(
       map((subjects: Subject[]) => this.markTakenSubjects(subjects))
     );
   }
 
-  getAllSubjectsForTeacher(): Observable<Subject[]> {
-    return this.http.get<Subject[]>(environment.apiUrl + 'subjects/teacher');
-  }
-
   getSubjectById(id: number): Observable<Subject> {
-    return this.http.get<Subject>(environment.apiUrl + 'subjects/' + id);
+    return this.http.get<Subject>(environment.apiUrl + 'subject/' + id);
   }
 
-  addSubject(teacherId: number, subject: Subject): Observable<Subject> {
-    return this.http.post<Subject>(environment.apiUrl + 'subjects/' + teacherId, subject);
+  addSubject(subject: Subject): Observable<Subject> {
+    return this.http.post<Subject>(environment.apiUrl + 'subject', subject);
   }
 
   modifySubject(subject: Subject): Observable<Subject> {
-    return this.http.put<Subject>(environment.apiUrl + 'subjects/' + subject.id, subject);
+    return this.http.put<Subject>(environment.apiUrl + 'subject/' + subject.id, subject);
   }
 
   deleteSubject(id: number): Observable<Subject> {
-    return this.http.delete<Subject>(environment.apiUrl + 'subjects/' + id);
+    return this.http.delete<Subject>(environment.apiUrl + 'subject/' + id);
   }
 
   private markTakenSubjects(subjects: Subject[]): ExtendedSubject[] {

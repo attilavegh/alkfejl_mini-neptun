@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 import {Role, Student, Teacher} from '../../models/user.model';
-import {environment} from '../../../environments/environment';
-import {tap} from 'rxjs/operators';
+import {UserService} from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +13,18 @@ export class AuthorizationService {
 
   private currentUser: Student | Teacher;
 
-  constructor(private client: HttpClient) {
+  constructor(private userService: UserService) {
   }
 
   login(username: string, password: string): Observable<Student | Teacher> {
     const token = btoa(username + ':' + password);
 
-    return this.client.get<Student | Teacher>(environment.apiUrl + 'users/' + username, {
-      headers: {'Authorization': `Basic ${token}`}
-    }).pipe(tap(user => this.onLogin(user, username, password)));
+    return this.userService.getUser(username, token).pipe(tap(user => this.onLogin(user, username, password)));
   }
 
   private onLogin(user: Student | Teacher, username: string, password: string) {
     localStorage.setItem('token', btoa(username + ':' + password));
+    localStorage.setItem('role', user.role);
     this.currentUser = user;
   }
 

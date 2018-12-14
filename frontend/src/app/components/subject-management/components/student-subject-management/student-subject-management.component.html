@@ -33,6 +33,11 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="teacher">
+      <th mat-header-cell *matHeaderCellDef>Tanár</th>
+      <td mat-cell *matCellDef="let subject">{{subject.teacher.name}}</td>
+    </ng-container>
+
     <ng-container matColumnDef="options">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let subject" class="student-subject-management__options">

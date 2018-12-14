@@ -1,0 +1,29 @@
+.user-details {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  &__content-header {
+    width: 100%;
+    background-color: #f5f5f5;
+    margin-bottom: 30px;
+  }
+
+  &__content-body {
+    margin-left: 8px;
+  }
+}
+
+span {
+  font-size: 18px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}

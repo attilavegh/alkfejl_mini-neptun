@@ -15,11 +15,11 @@ export class StudentService {
   constructor(private http: HttpClient) {
   }
 
-  getTimetable(username: string): Observable<Subject[]> {
-    return this.http.get<Subject[]>(environment.apiUrl + 'students/' + username + '/subjects');
+  getTimetable(): Observable<Subject[]> {
+    return this.http.get<Subject[]>(environment.apiUrl + 'student/subjects');
   }
 
   manageStudentSubject(student: Student): Observable<Student> {
-    return this.http.patch<Student>(environment.apiUrl + 'students/subjects', student);
+    return this.http.patch<Student>(environment.apiUrl + 'student/subjects', student);
   }
 }

@@ -1,6 +1,5 @@
 package hu.elte.minineptun.controllers;
 
-import hu.elte.minineptun.entities.Student;
 import hu.elte.minineptun.entities.Subject;
 import hu.elte.minineptun.entities.Teacher;
 import hu.elte.minineptun.repositories.StudentRepository;
@@ -11,16 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.security.access.annotation.Secured;
 
 @RestController
-@RequestMapping("/api/subjects")
+@RequestMapping("/api/subject")
 public class SubjectController {
 
     @Autowired
@@ -37,18 +33,6 @@ public class SubjectController {
         return ResponseEntity.ok(subjectRepository.findAll());
     }
 
-    @GetMapping("/teacher")
-    public ResponseEntity<Iterable<Subject>> getTeacherSubjects(@RequestHeader("authorization") String token) {
-        ArrayList<Subject> subjects = new ArrayList<>();
-        subjectRepository.findAll().forEach(subjects::add);
-
-        List<Subject> filteredSubjects = subjects.stream()
-                .filter(subject -> subject.getTeacher().getUsername().equals(getUsername(token)))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(filteredSubjects);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Subject> getSubjectById(@PathVariable Integer id) {
         Optional<Subject> oSubject = subjectRepository.findById(id);
@@ -59,21 +43,11 @@ public class SubjectController {
         return ResponseEntity.ok(oSubject.get());
     }
 
-    @GetMapping("/{id}/students")
-    public ResponseEntity<List<Student>> getStudentsBySubjectId(@PathVariable Integer id) {
-        Optional<Subject> oSubject = subjectRepository.findById(id);
-        if (!oSubject.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(oSubject.get().getStudents());
-    }
-
-    @PostMapping("/{teacherId}")
+    @PostMapping()
     @Secured("ROLE_TEACHER")
-    public ResponseEntity<Subject> addSubjectByTeacherId(@PathVariable Integer teacherId,
+    public ResponseEntity<Subject> addSubjectByTeacherId(@RequestHeader("authorization") String token,
                                                          @RequestBody Subject subject) {
-        Optional<Teacher> oTeacher = teacherRepository.findById(teacherId);
+        Optional<Teacher> oTeacher = teacherRepository.findByUsername(getUsername(token));
         if (!oTeacher.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -101,6 +75,7 @@ public class SubjectController {
         subject.setId(id);
         subject.setTeacher(oSubject.get().getTeacher());
         subject.setStudents(oSubject.get().getStudents());
+
         return ResponseEntity.ok(subjectRepository.save(subject));
     }
 

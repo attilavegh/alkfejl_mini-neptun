@@ -27,12 +27,12 @@ export interface User {
   subjects: Subject[];
 }
 
-export interface Student extends User {
+export interface Teacher extends User {
   department: string;
   room: string;
 }
 
-export interface Teacher extends User {
+export interface Student extends User {
   yearStarted: number;
   semester: number;
 }
