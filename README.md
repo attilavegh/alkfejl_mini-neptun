@@ -145,9 +145,62 @@ A fő branch a `master`, melyre közvetlen `push` nem lehetséges, csak külön 
 	- SubjectController.java
 	
   - security
-    - UserDetailsService.java
+    - MyUserDetailsService.java
     
   - MiniNeptunApplication.java
   - JpaConfig.java
   - WebSecurityConfig.java
 
+## Use-case diagram
+
+![Use-case diagram](/docs/use-case.PNG)
+
+## Kliensoldali szolgáltatások
+
+- Regisztráció
+  - Új felhasználó regisztációját teszi lehetőve. Lehetőség van tanárként, illetve diákként regisztrálni. Sikeres regisztráció után az alkalmazás a belépés oldalra navigál.
+- Belépés
+  - Sikeres regisztráció után lehetőség van belépni az alkalmazásba.
+- Tantárgyak listázása
+  - Az alkalmazás listázza az elérhető tantárgyakat.
+- Tantárgy felvétele
+  - Belépett hallgató vehet fel meghirdetett tantárgyakat.
+- Tantárgy leadása
+  - Belépett hallgató leadhat tárgyakat.
+- Órarend megtekintése
+  - Belépett hallgató megtekintheti a felvett tárgyait, illetve azok adatait, mint például az óra helyszínét és időpontját.
+- Tantárgy meghirdetése
+  - Belépett tanár új tantárgyat tehet elérhetővé a hallgatók számára.
+- Tantárgy szerkesztése
+  - Belépett tanárnak lehetősége van egy tantárgy adatait megváltoztatni.
+- Tantárgy törlése
+  - Belépett tanár meglévő tantárgyakat törölhet, ekkor a hallgatók felvett tárgyai közül is törlődik a tantárgy.
+- Felhasználói adatok megtekintése
+  - Belépett felhasználó megtekintheti a saját adatait.
+- Kilépés
+  - Belépett felhasználó ki tud lépni az oldalról.
+  
+## Kapcsolat a szerverrel
+
+TODO
+
+## Egy folyamat bemutatása
+
+Egy felhasználó regisztrációja, belépése, majd a főoldalra (Tárgyak) kerülése.  
+![Szekvencia diagram](/docs/szekvencia-diagram.PNG)
+
+## Felhasználói dokumentáció
+
+### Telepítés és futtatás
+
+- A futtatáshoz szükséges programok: Node.js, Angular 6, Java
+- A https://github.com/attilavegh/mini-neptun GitHub oldalon kattintsunk a Clone or download gombra, majd `Download ZIP`. A letöltött zip állományt csomagoljuk ki tetszőleges helyen.
+- Javahoz használt fejlesztői környezetben, például NetBeans-ben a pom.xml fájlra kattintunk jobb egérgombbal, majd Run Maven -> Goals. Itt a következő parancsot adjuk meg Goal-ként: `spring-boot:run`. A szerverünk így már fut is.
+- Node.js használatával `npm install` paranccsal tudjuk telepíteni a kliens oldali alkalmazás futtatásához szükséges függőségeket, majd az `npm start` paranccsal elindíthatjuk az alkalmazást.
+- Ha minden rendben lefutott, akkor látogassunk el egy böngészőben a http://localhost:4200 címre (alapbeállítás, a port eltérhet).
+
+- Az oldalra ellátogatva a bejelentkezés oldal fogad minket, ahol be tudunk lépni meglévő felhasználóval és jelszóval. Ha ezekkel nem rendelkezünk, akkor a regisztráció menüpontra kattintva regisztrálhatunk.
+- Regisztrálhatunk tanárként vagy hallgatóként.
+- Sikeres regisztráció után a ismét a belépés oldalra navigál minket az alkalmazás, ahol immár beléphetünk, ha eddig nem voltunk regisztrálva.
+
+- Belépve már elérhetőek számunkra a `Kliensoldali szolgáltatások` pontban leírt lehetőségek.
