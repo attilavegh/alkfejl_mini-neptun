@@ -41,39 +41,29 @@ Cél a Neptun tárgyfelvétel funkciójának megvalósítása kisebb keretek kö
 ## Végpontok
 
   - ### GET
-    - /students - tanulók listázása
-    - /students/{username} - tanuló keresése felhasználónév szerint
+    - /student/subjects - tanuló tárgyai
     
-    - /subjects - tárgyak listázása
-    - /subjects/{id} - tárgy keresése ID szerint
-    - /subjects/name/{name} - tárgy keresése név szerint
-    - /subjects/{id}/teacher - tárgy tanárának keresése
-    - /subjects/{id}/students - tárgyat felvett tanulók listázása
+    - /subject - összes tárgy
+    - /subject/{id} - tárgy ID szerint
     
-    - /teacher - tanárok listázása
-    - /teacher/{username} - tanár keresése felhasználónév szerint
-    - /teacher/name/{name} - tanár keresése név szerint
-   
-    - /users - felhasználók listázása
-    - /users/{username} - felhasználó keresése felhasználónév szerint
+    - /teacher/subjects - tanár tárgyai
+    
+    - /user/{username} - felhasználó
 
   - ### POST
-    - /students/register - új tanuló hozzáadása
-    - /teachers/register - új tanár hozzáadása
-    - /subjects/{teacherId} - új tárgy hozzáadása
+    - /student/register - új tanuló hozzáadása
+    - /teacher/register - új tanár hozzáadása
+    
+    - /subject - új tárgy hozzáadása egy tanárhoz
 
   - ### PATCH
-    - /students/subjects - tárgyak módosítása
+    - /student/subjects - tanuló tárgyainak módosítása
 
   - ### PUT
-    - /students/{id} - tanuló szerkesztése
-    - /subjects/{id} - tárgy szerkesztése
-    - /teachers/{id} - tanár szerkesztése
+    - /subject/{id} - tárgy szerkesztése
     
   - ### DELETE
-    - /students/{id} - tanuló törlése
-    - /subjects/{id} - tárgy törlése
-    - /teachers/{id} - tanár törlése
+    - /subject/{id} - tárgy törlése
     	
 ## Egy végpont működése 
 
