@@ -172,7 +172,7 @@ A fő branch a `master`, melyre közvetlen `push` nem lehetséges, csak külön 
   
 ## Kapcsolat a szerverrel
 
-TODO
+A szerverrel való kapcsolatot az Angularban található ```HttpClientModule``` biztosítja.
 
 ## Egy folyamat bemutatása
 
